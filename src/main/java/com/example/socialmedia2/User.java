@@ -1,5 +1,9 @@
 package com.example.socialmedia2;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class User {
@@ -15,6 +19,19 @@ public class User {
         this.password = password;
         this.followers = followers;
         this.posts = posts;
+    }
+
+    public void retrieveUserDataFromDatabase(Connection connection) throws SQLException {
+        // Retrieve user data from the database based on the username
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
+        statement.setString(1, userName);
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            // Retrieve and set user properties from the database
+            // Example: this.username = resultSet.getString("username");
+            // Example: this.password = resultSet.getString("password");
+        }
     }
 public User(String userName,String password){
     this.userName = userName;

@@ -4,24 +4,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class Likes {
-    private User username;
+    private User loggedInUser;
     private List<User> users;
     private LocalDateTime timestamp;
     private int count;
 
-    public Likes(User username, List<User> users, LocalDateTime timestamp, int count) {
-        this.username = username;
+
+    public Likes(User loggedInUser, List<User> users, LocalDateTime timestamp, int count) {
+        this.loggedInUser = loggedInUser;
         this.users = users;
         this.timestamp = timestamp;
         this.count = count;
     }
 
-    public User getUsername() {
-        return username;
+    public User getLoggedInUser() {
+        return loggedInUser;
     }
 
-    public void setUsername(User username) {
-        this.username = username;
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
     }
 
     public List<User> getUsers() {
@@ -56,5 +57,15 @@ public class Likes {
     public void removeUser(User username) {
         users.remove(username);
         count--;
+    }
+
+    @Override
+    public String toString() {
+        return "Likes{" +
+                "username=" + loggedInUser +
+                ", users=" + users +
+                ", timestamp=" + timestamp +
+                ", count=" + count +
+                '}';
     }
 }

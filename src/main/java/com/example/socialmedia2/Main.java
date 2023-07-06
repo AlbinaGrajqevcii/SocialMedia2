@@ -1,13 +1,18 @@
 package com.example.socialmedia2;
 
+import javafx.application.Application;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.sql.*;
-public class Main {
+public class Main  {
     public static void main(String[] args)throws ClassNotFoundException, SQLException {
 
-        User user1 = new User("dalinaelshani", "dalina123");
+        boolean loggedIn = false;
+
+//        User user1 = new User("dalinaelshani", "dalina123");
 
 
 //        Class.forName("com.mysql.cj.jdbc.Driver");
@@ -33,9 +38,9 @@ public class Main {
         ResultSet resultSet = preparedStatement.executeQuery("SELECT * FROM user");
 
         while (resultSet.next()) {
-            String username = resultSet.getString("userName");  // Corrected column name to "userName"
-            String password = resultSet.getString("password");  // Corrected column name to "password"
-            System.out.println("Username: " + username + ", Password: " + password);
+            String username = resultSet.getString("userName");
+            String password = resultSet.getString("password");
+//            System.out.println("Username: " + username + ", Password: " + password);
         }
         LogIn login = new LogIn();
         Scanner scanner = new Scanner(System.in);
@@ -43,8 +48,7 @@ public class Main {
         while (true) {
             System.out.println("1.Register");
             System.out.println("2.Log In");
-            System.out.println("3.Log Out");
-            System.out.println("4.Exit");
+            System.out.println("3.Exit");
             System.out.println("Enter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -67,7 +71,7 @@ public class Main {
                     username = scanner.nextLine();
                     System.out.print("Enter password: ");
                     password = scanner.nextLine();
-                    login.logInUser(username, password);
+                    loggedIn = login.logInUser(username, password);
 
                     break;
                 case 2:
@@ -77,14 +81,16 @@ public class Main {
                     System.out.print("Enter password: ");
                     password = scanner.nextLine();
                     login.logInUser(username, password);
+                    if (loggedIn) {
+                        User loggedInUser = new User(username, password);
+                        loggedInUser.retrieveUserDataFromDatabase(connection); // Retrieve user data from the database
+                        System.out.println("Logged in as: " + loggedInUser.getUserName());
+                        manageApplication(loggedInUser, scanner);
+                        break;// Pass the loggedInUser object and scanner to the manageApp method
+                    }
                     break;
+
                 case 3:
-                    System.out.println("Log Out");
-                    System.out.println("Enter username: ");
-                    String logoutUsername = scanner.nextLine();
-                    login.LogOut(logoutUsername);
-                    break;
-                case 4:
                     System.exit(0);
                 default:
                     System.out.println("Invalid choice.Please try again!");
@@ -92,11 +98,7 @@ public class Main {
             }
             break;
 
-
         }
-
-
-
 
         while (true) {
             System.out.println("\n=== Social Media App ===");
@@ -104,7 +106,7 @@ public class Main {
             System.out.println("2. Manage Likes");
             System.out.println("3. Manage Comments");
             System.out.println("4. Manage Followers");
-            System.out.println("0. Exit");
+            System.out.println("5. Log Out");
             System.out.print("Enter your choice: ");
             int choice2 = scanner.nextInt();
             scanner.nextLine();
@@ -114,7 +116,7 @@ public class Main {
                     managePosts();
                     break;
                 case 2:
-                    manageLikes();
+                    manageLikes(loggedInUser);
                     break;
                 case 3:
                     manageComments();
@@ -122,7 +124,9 @@ public class Main {
                 case 4:
                     manageFollowers();
                     break;
-                case 0:
+                case 5:
+                    loggedIn = false;
+                    System.out.println("Logged Out");
                     System.out.println("Exiting the program...");
                     scanner.close();
                     return;
@@ -131,6 +135,9 @@ public class Main {
                     break;
             }
         }
+    }
+
+    private static void manageApplication(User loggedInUser, Scanner scanner) {
     }
 
     private static void managePosts() {
@@ -155,9 +162,6 @@ public class Main {
         }
     }
 
-    private static void manageLikes() {
-        // Logic for managing likes
-    }
 
     private static void manageComments() {
         Comments postComments = new Comments();
@@ -202,5 +206,31 @@ public static  void manageFollowers() {
 //         user1.getPosts().add(post1);
 //         user1.getPosts().add(post2);
 //         user1.getFollowers().add(user2);
+    }
+    private static void manageLikes(User loggedInUser) {
+        User user1 = new User(1, "albinagrajqevci","albina123", new ArrayList<>(), new ArrayList<>());
+        User user2 = new User(2, "dalinaelshani","dalina123", new ArrayList<>(), new ArrayList<>());
+        User user3 = new User(3,"medinashabani","medina123",new ArrayList<>(),new ArrayList<>());
+        User user4 = new User(4,"artaa","artaa123",new ArrayList<>(),new ArrayList<>());
+        User user5 = new User(5,"Orgessa","orgessa123",new ArrayList<>(),new ArrayList<>());
+        User user6 = new User(6,"elfatekrasniqi","elfate123",new ArrayList<>(),new ArrayList<>());
+        List<User> users = new ArrayList<>();
+        users.add(user1);
+        users.add(user2);
+        users.add(user3);
+        users.add(user6);
+
+
+        Likes likes = new Likes(loggedInUser, users, LocalDateTime.now(), users.size());
+
+        // Display initial state
+        System.out.println("Initial Likes:");
+        System.out.println("Username: " + loggedInUser.getUserName());
+        System.out.println("Users who liked: " + likes.getUsers());
+        System.out.println("Timestamp: " + likes.getTimestamp());
+        System.out.println("Count: " + likes.getCount());
+
+        // Add a user to likes
+        likes.addUser(user5);
     }
 }
