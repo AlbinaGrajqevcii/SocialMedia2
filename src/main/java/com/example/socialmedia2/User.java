@@ -78,6 +78,16 @@ public User(String userName,String password){
         this.posts = posts;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", followers=" + followers +
+                ", posts=" + posts +
+                '}';
+    }
 }
 
 

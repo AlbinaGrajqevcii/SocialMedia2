@@ -21,12 +21,12 @@ public class Followers {
         }
     }
 
-    public void removeFollower(String followerUsername) {
-        if (followers.contains(followerUsername)) {
-            followers.remove(followerUsername);
-            System.out.println(followerUsername + " is no longer following " + username);
+    public void removeFollower(User follower) {
+        if (followers.contains(follower)) {
+            followers.remove(follower);
+            System.out.println(follower.getUserName() + " is no longer following " + username.getUserName());
         } else {
-            System.out.println(followerUsername + " is not following " + username);
+            System.out.println(follower.getUserName() + " is not following " + username.getUserName());
         }
     }
 

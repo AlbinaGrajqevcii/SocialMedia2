@@ -181,18 +181,18 @@ public static  void manageFollowers() {
         followers.addFollower(user4);
         followers.addFollower(user5);
         followers.addFollower(user6);
-        followers.removeFollower("follower2");
-        followers.removeFollower("follower3");
+        followers.removeFollower(user6);
+        followers.removeFollower(user3);
         List<User> followerList = followers.getFollowers();
 
-        System.out.println("Followers:");
-        for (User follower : followerList) {
-            System.out.println(follower);
-        }
+    System.out.println("Followers:");
+    for (User follower : followerList) {
+        System.out.println(follower.getUserName());
+    }
 
-        System.out.println("User ID: " + user1.getUserID());
-        System.out.println("Username: " + user1.getUserName());
-        System.out.println("Followers: " + user1.getFollowers());
+//        System.out.println("User ID: " + user1.getUserID());
+//        System.out.println("Username: " + user1.getUserName());
+//        System.out.println("Followers: " + user1.getFollowers());
 //         user1.getPosts().add(post1);
 //         user1.getPosts().add(post2);
 //         user1.getFollowers().add(user2);
@@ -216,7 +216,10 @@ public static  void manageFollowers() {
         // Display initial state
         System.out.println("Initial Likes:");
         System.out.println("Username: " + user1.getUserName().toString());
-        System.out.println("Users who liked: " + likes.getUsers());
+        System.out.println("Users who liked:");
+        for (User user : likes.getUsers()) {
+            System.out.println(user.toString());
+        }
         System.out.println("Timestamp: " + likes.getTimestamp());
         System.out.println("Count: " + likes.getCount());
 
