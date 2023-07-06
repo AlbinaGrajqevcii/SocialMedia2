@@ -1,28 +1,45 @@
 package com.example.socialmedia2;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Likes {
-    private User loggedInUser;
+    private User username;
     private List<User> users;
     private LocalDateTime timestamp;
     private int count;
 
 
     public Likes(User loggedInUser, List<User> users, LocalDateTime timestamp, int count) {
-        this.loggedInUser = loggedInUser;
+        this.username = loggedInUser;
         this.users = users;
         this.timestamp = timestamp;
         this.count = count;
     }
 
-    public User getLoggedInUser() {
-        return loggedInUser;
+    public void retrieveUserDataFromDatabase(Connection connection) throws SQLException {
+        // Retrieve user data from the database based on the username
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM user WHERE username = ?");
+        statement.setString(1, getUsername().getUserName());
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            // Retrieve and set user properties from the database
+            // Example: this.username = resultSet.getString("username");
+            // Example: this.password = resultSet.getString("password");
+        }
     }
 
-    public void setLoggedInUser(User loggedInUser) {
-        this.loggedInUser = loggedInUser;
+    public User getUsername() {
+        return username;
+    }
+
+    public void setUsername(User username) {
+        this.username = username;
     }
 
     public List<User> getUsers() {
@@ -62,7 +79,7 @@ public class Likes {
     @Override
     public String toString() {
         return "Likes{" +
-                "username=" + loggedInUser +
+                "username=" + username +
                 ", users=" + users +
                 ", timestamp=" + timestamp +
                 ", count=" + count +

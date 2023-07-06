@@ -197,7 +197,7 @@ public static  void manageFollowers() {
 //         user1.getPosts().add(post2);
 //         user1.getFollowers().add(user2);
     }
-    private static void manageLikes(User loggedInUser) {
+    private static void manageLikes() {
         User user1 = new User(1, "albinagrajqevci","albina123", new ArrayList<>(), new ArrayList<>());
         User user2 = new User(2, "dalinaelshani","dalina123", new ArrayList<>(), new ArrayList<>());
         User user3 = new User(3,"medinashabani","medina123",new ArrayList<>(),new ArrayList<>());
@@ -211,11 +211,11 @@ public static  void manageFollowers() {
         users.add(user6);
 
 
-        Likes likes = new Likes(loggedInUser, users, LocalDateTime.now(), users.size());
+        Likes likes = new Likes(user1, users, LocalDateTime.now(), users.size());
 
         // Display initial state
         System.out.println("Initial Likes:");
-        System.out.println("Username: " + loggedInUser.getUserName());
+        System.out.println("Username: " + user1.getUserName().toString());
         System.out.println("Users who liked: " + likes.getUsers());
         System.out.println("Timestamp: " + likes.getTimestamp());
         System.out.println("Count: " + likes.getCount());
