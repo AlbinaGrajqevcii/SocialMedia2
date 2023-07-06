@@ -71,7 +71,7 @@ public class Main  {
                     username = scanner.nextLine();
                     System.out.print("Enter password: ");
                     password = scanner.nextLine();
-                    loggedIn = login.logInUser(username, password);
+                    login.logInUser(username, password);
 
                     break;
                 case 2:
@@ -81,13 +81,6 @@ public class Main  {
                     System.out.print("Enter password: ");
                     password = scanner.nextLine();
                     login.logInUser(username, password);
-                    if (loggedIn) {
-                        User loggedInUser = new User(username, password);
-                        loggedInUser.retrieveUserDataFromDatabase(connection); // Retrieve user data from the database
-                        System.out.println("Logged in as: " + loggedInUser.getUserName());
-                        manageApplication(loggedInUser, scanner);
-                        break;// Pass the loggedInUser object and scanner to the manageApp method
-                    }
                     break;
 
                 case 3:
@@ -116,7 +109,7 @@ public class Main  {
                     managePosts();
                     break;
                 case 2:
-                    manageLikes(loggedInUser);
+                    manageLikes();
                     break;
                 case 3:
                     manageComments();
@@ -135,9 +128,6 @@ public class Main  {
                     break;
             }
         }
-    }
-
-    private static void manageApplication(User loggedInUser, Scanner scanner) {
     }
 
     private static void managePosts() {
