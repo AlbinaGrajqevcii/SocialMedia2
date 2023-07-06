@@ -17,6 +17,8 @@ public class User {
         this.posts = posts;
     }
 public User(String userName,String password){
+    this.userName = userName;
+    this.password = password;
 
 }
     public int getUserID() {

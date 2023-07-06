@@ -9,30 +9,27 @@ public class Main {
 
         User user1 = new User("dalinaelshani", "dalina123");
 
-
-
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/socialmedia", "root","");
-        Statement statement = connection.createStatement();
-        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(userName,password) VALUES (?,?)");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/socialmedia", "root", "");
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(userName, password) VALUES (?, ?)");
         if (user1.getUserName() != null) {
             preparedStatement.setString(1, user1.getUserName());
         } else {
-            // Handle the case when the username is null
-            // You can either set a default value or skip the insertion
-            // For example:
-            preparedStatement.setString(1, "");}
-        preparedStatement.setString(1,user1.getUserName());
-        preparedStatement.setString(2,user1.getPassword());
+            preparedStatement.setNull(1, Types.VARCHAR);
+        }
+        if (user1.getPassword() != null) {
+            preparedStatement.setString(2, user1.getPassword());
+        } else {
+            preparedStatement.setNull(2, Types.VARCHAR);
+        }
         preparedStatement.executeUpdate();
-        connection.commit();
-        connection.setAutoCommit(true);
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM user");
 
+        connection.setAutoCommit(true);
+        ResultSet resultSet = preparedStatement.executeQuery("SELECT * FROM user");
 
         while (resultSet.next()) {
-            String username = resultSet.getString("Username");  // Corrected column name to "Username"
-            String password = resultSet.getString("Password");  // Corrected column name to "Password"
+            String username = resultSet.getString("userName");  // Corrected column name to "userName"
+            String password = resultSet.getString("password");  // Corrected column name to "password"
             System.out.println("Username: " + username + ", Password: " + password);
         }
         LogIn login = new LogIn();

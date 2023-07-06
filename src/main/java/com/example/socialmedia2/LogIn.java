@@ -7,12 +7,12 @@ public class LogIn {
     private HashMap<String, Boolean> loggedInUsers = new HashMap<>();
 
 
-    public void registration(String username, String password){
-        if(user_identification.containsKey(username)){
+    public void registration(String userName, String password){
+        if(user_identification.containsKey(userName)){
             System.out.println("Username already exists. Please choose a different username.");
 
         }else {
-            user_identification.put(username,password);
+            user_identification.put(userName,password);
             System.out.println("Registration successful! Please proceed to login");
 
         }
@@ -26,14 +26,14 @@ public class LogIn {
 
         }}
 
-            public Boolean logInUser (String username, String password){
-                if (user_identification.containsKey(username) && user_identification.get(username).equals(password)) {
+            public Boolean logInUser (String userName, String password){
+                if (user_identification.containsKey(userName) && user_identification.get(userName).equals(password)) {
 
-                    if (loggedInUsers.containsKey(username)) {
+                    if (loggedInUsers.containsKey(userName)) {
                         System.out.println("User is already logged in.");
                         return false;
                     } else {
-                        loggedInUsers.put(username, true);
+                        loggedInUsers.put(userName, true);
 
                         System.out.println("Log in successfull!");
 
@@ -46,9 +46,9 @@ public class LogIn {
                     return false;
                 }
             }
-            public void LogOut (String username){
-                if (loggedInUsers.containsKey(username)) {
-                    loggedInUsers.remove(username);
+            public void LogOut (String userName){
+                if (loggedInUsers.containsKey(userName)) {
+                    loggedInUsers.remove(userName);
                     System.out.println("Log out successful!");
 
                 } else {

@@ -46,4 +46,11 @@ public class Followers {
         this.followers = followers;
     }
 
+    @Override
+    public String toString() {
+        return "Followers{" +
+                "username=" + username +
+                ", followers=" + followers +
+                '}';
+    }
 }
