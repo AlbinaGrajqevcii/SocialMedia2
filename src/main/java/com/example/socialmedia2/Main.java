@@ -9,20 +9,25 @@ public class Main {
 
         User user1 = new User("dalinaelshani", "dalina123");
 
+
+//        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/socialmedia", "root", "");
+//        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(userName, password) VALUES (?, ?)");
+//        if (user1.getUserName() != null) {
+//            preparedStatement.setString(1, user1.getUserName());
+//        } else {
+//            preparedStatement.setNull(1, Types.VARCHAR);
+//        }
+//        if (user1.getPassword() != null) {
+//            preparedStatement.setString(2, user1.getPassword());
+//        } else {
+//            preparedStatement.setNull(2, Types.VARCHAR);
+//        }
+//        preparedStatement.executeUpdate();
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/socialmedia", "root", "");
+
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(userName, password) VALUES (?, ?)");
-        if (user1.getUserName() != null) {
-            preparedStatement.setString(1, user1.getUserName());
-        } else {
-            preparedStatement.setNull(1, Types.VARCHAR);
-        }
-        if (user1.getPassword() != null) {
-            preparedStatement.setString(2, user1.getPassword());
-        } else {
-            preparedStatement.setNull(2, Types.VARCHAR);
-        }
-        preparedStatement.executeUpdate();
 
         connection.setAutoCommit(true);
         ResultSet resultSet = preparedStatement.executeQuery("SELECT * FROM user");
@@ -53,6 +58,9 @@ public class Main {
                     System.out.print("Enter password: ");
                     String password = scanner.nextLine();
                     login.registration(username, password);
+                    preparedStatement.setString(1, username);
+                    preparedStatement.setString(2, password);
+                    preparedStatement.executeUpdate();
 
                     System.out.println("\nLog In");
                     System.out.print("Enter username: ");
