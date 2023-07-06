@@ -16,7 +16,9 @@ public class User {
         this.followers = followers;
         this.posts = posts;
     }
+public User(String userName,String password){
 
+}
     public int getUserID() {
         return userID;
     }
